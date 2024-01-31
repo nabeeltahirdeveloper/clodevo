@@ -1,9 +1,13 @@
+"use client"
 import React from "react";
 import styles from "./Sidebar.module.css";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
+  const location = usePathname();
+  const backgroundColor = location === "/" ? "#293040" : "#0C0B0B";
   return (
-    <div className={styles.sidebarContainer}>
+    <div className={styles.sidebarContainer} style={{backgroundColor}}>
       <h1>Clodevo</h1>
       <div className={"flex flex-col"}>
         <div>
