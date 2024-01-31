@@ -221,7 +221,7 @@ export default function Home() {
                   <input
                     type="text"
                     defaultValue={"https://"}
-                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                   />
                 </div>
                 <div className="flex gap-11 mt-[9px]">
@@ -231,7 +231,7 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
                       Choose a user-friendly test name for use in the API, email
@@ -245,7 +245,7 @@ export default function Home() {
                     <input
                       type="text"
                       defaultValue={"5 minutes"}
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
                       how often we run a test on your given monitor ?
@@ -273,7 +273,7 @@ export default function Home() {
                     <input
                       type="text"
                       defaultValue={"GET"}
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
                   <div className=" w-full">
@@ -283,7 +283,7 @@ export default function Home() {
                     <input
                       type="text"
                       defaultValue={"30 seconds"}
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
                 </div>
@@ -295,7 +295,7 @@ export default function Home() {
                     type="text"
                     placeholder="parameter1=value&parameter2=another_value"
                     draggable={false}
-                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[82px] text-white"
+                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[82px] text-white"
                   />
                 </div>
               </div>
@@ -315,7 +315,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Authorization"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
                   <div className=" w-full">
@@ -325,7 +325,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Bearer ey12345="
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
                 </div>
@@ -348,7 +348,7 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
                   <div className=" w-full">
@@ -357,7 +357,7 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
                       Stored encrypted and safe
@@ -388,7 +388,7 @@ export default function Home() {
                                 className="flex flex-col items-center justify-center"
                               >
                                 <button
-                                  className="flex gap-2 items-center justify-center w-[116px] h-5 text-[10px] text-white rounded-[14px]"
+                                  className="flex gap-2 items-center px-[6px] w-[116px] h-5 text-[10px] text-white rounded-[14px]"
                                   style={{
                                     backgroundColor: activeButtons?.includes?.(
                                       button?.label
@@ -437,7 +437,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Choose"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
                       Alerts when URL return different HTTP status code
@@ -456,7 +456,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Choose"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
                       Alerts when URL return different HTTP versions
@@ -477,7 +477,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="body"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
                   <div className=" w-full">
@@ -487,7 +487,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Regex"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
                   <div className=" w-full">
@@ -519,7 +519,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="5 minutes"
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
                       Set the uptime duration to auto-resolve incidents.
@@ -532,7 +532,7 @@ export default function Home() {
                     <input
                       type="text"
                       defaultValue={"Immediate start"}
-                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                      className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
                       Set the wait time before initiating a new incident
@@ -549,7 +549,7 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder={"Default / Create a contact group"}
-                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                   />
                 </div>
               </div>
@@ -561,7 +561,7 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder={"Default / Create a contact group"}
-                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                   />
                 </div>
                 <div className=" w-full my-8">
@@ -595,7 +595,7 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder={"Type a new email"}
-                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
+                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9 border-[3px] border-zinc-500 outline-none active:outline-none min-h-[52px] text-white"
                   />
                   <span className="bg-[#4248AD] text-white text-[10px] py-0.5 px-2 rounded-xl">
                     youssef@clodevo.com
