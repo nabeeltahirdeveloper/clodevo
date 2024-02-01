@@ -1,6 +1,19 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 
 export default function page() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch("/api/monitor", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setData(res?.data);
+      })
+      .finally(() => setLoading(false));
+  }, []);
   return (
     <div
       style={{
@@ -94,39 +107,12 @@ export default function page() {
               Type{" "}
             </div>
           </div>
-          {[
-            {
-              name: "Google",
-              percent: 99,
-              location: ["/icons/image 102.png"],
-              type: "HTTP",
-            },
-            {
-              name: "Clodevo",
-              percent: 17,
-              location: ["/icons/image 101.png", "/icons/image 102.png"],
-              type: "HTTP",
-            },
-            {
-              name: "Facebook",
-              percent: 60,
-              location: [
-                "/icons/image 101.png",
-                "/icons/image 102.png",
-                "/icons/image 101.png",
-                "/icons/image 102.png",
-                "/icons/image 101.png",
-                "/icons/image 102.png",
-              ],
-              type: "HTTP",
-            },
-            {
-              name: "Apple",
-              percent: 79,
-              location: ["/icons/image 101.png"],
-              type: "HTTP",
-            },
-          ].map((item) => (
+          {loading && (
+            <div className="flex justify-center items-center">
+              <h1 className="text-white my-4">Loading...</h1>
+            </div>
+          )}
+          {data?.map((item) => (
             <div className="flex justify-between items-center">
               <div className="w-[5%]">
                 <div
@@ -143,7 +129,7 @@ export default function page() {
               </div>
               <div className="text-sm font-semibold text-white w-[19%]">
                 {" "}
-                {item.name}
+                {item?.uptime_config?.name}
               </div>
               <div className="w-[19%] ">
                 <div
@@ -157,18 +143,25 @@ export default function page() {
                       : "border-red-500 text-red-500"
                   }`}
                 >
-                  {item?.percent}%
+                  {10}%
                 </div>
               </div>
               <div className="w-[19%]">
                 {" "}
                 <div className="flex gap-2 items-center flex-wrap">
-                  {item?.location?.slice(0, 3)?.map((item) => (
-                    <img src={item} className="h-4 w-4" />
+                  {item?.uptime_config?.locations?.slice(0, 3)?.map((item) => (
+                    <img
+                      src={
+                        locationsData?.filter(
+                          (location) => location?.label === item
+                        )?.[0]?.icon
+                      }
+                      className="h-4 w-4"
+                    />
                   ))}
-                  {item?.location?.length > 3 && (
+                  {item?.uptime_config?.locations?.length > 3 && (
                     <div className="flex text-[10px] justify-center items-center text-white">
-                      +{item?.location?.length - 3} more
+                      +{item?.uptime_config?.locations?.length - 3} more
                     </div>
                   )}
                 </div>
@@ -176,7 +169,7 @@ export default function page() {
               <div className="text-sm w-[19%] text-white"> 5m</div>
               <div className="text-sm w-[19%] font-semibold text-white">
                 {" "}
-                {item.type}
+                {item?.uptime_config?.type}
               </div>
             </div>
           ))}
@@ -186,48 +179,93 @@ export default function page() {
   );
 }
 
-function ImageComponent() {
-  return (
-    <form>
-      <header className="header">
-        <h1 className="title">Title</h1>
-      </header>
-      <main className="main-content">
-        <div className="image-container">
-          <img
-            loading="lazy"
-            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/c9a85e6f0efcd9370572b63af20282db5b87757d8989ede36388f39afcd47da3?apiKey=3e6c7e0479074c51bca288c3658e27bb&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/c9a85e6f0efcd9370572b63af20282db5b87757d8989ede36388f39afcd47da3?apiKey=3e6c7e0479074c51bca288c3658e27bb&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/c9a85e6f0efcd9370572b63af20282db5b87757d8989ede36388f39afcd47da3?apiKey=3e6c7e0479074c51bca288c3658e27bb&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/c9a85e6f0efcd9370572b63af20282db5b87757d8989ede36388f39afcd47da3?apiKey=3e6c7e0479074c51bca288c3658e27bb&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/c9a85e6f0efcd9370572b63af20282db5b87757d8989ede36388f39afcd47da3?apiKey=3e6c7e0479074c51bca288c3658e27bb&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/c9a85e6f0efcd9370572b63af20282db5b87757d8989ede36388f39afcd47da3?apiKey=3e6c7e0479074c51bca288c3658e27bb&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/c9a85e6f0efcd9370572b63af20282db5b87757d8989ede36388f39afcd47da3?apiKey=3e6c7e0479074c51bca288c3658e27bb&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/c9a85e6f0efcd9370572b63af20282db5b87757d8989ede36388f39afcd47da3?apiKey=3e6c7e0479074c51bca288c3658e27bb&"
-            className="w-full aspect-[12.5]"
-            alt="Image"
-          />
-          <img loading="lazy" className="w-full aspect-[12.5]" alt="Image" />
-        </div>
-        <div className="button-container">
-          <button className="button">Button</button>
-        </div>
-        <div className="input-container">
-          <label htmlFor="inputField" className="input-label">
-            Input:
-          </label>
-          <input
-            type="text"
-            id="inputField"
-            className="input"
-            placeholder="Enter input"
-            aria-label="Input field"
-            aria-role="textbox"
-          />
-          <div className="input-description">Description</div>
-        </div>
-      </main>
-      <footer className="footer">
-        <a href="#" className="link">
-          Link
-        </a>
-        <a href="#" className="link">
-          Link
-        </a>
-      </footer>
-    </form>
-  );
-}
+const locationsData = [
+  {
+    label: "North Virginia",
+    icon: "/icons/image 101.png",
+  },
+  {
+    label: "Oregon",
+    icon: "/icons/image 101.png",
+  },
+  {
+    label: "Ohio",
+    icon: "/icons/image 101.png",
+  },
+  {
+    label: "Toronto",
+    icon: "/icons/image 102.png",
+  },
+  {
+    label: "Quebec",
+    icon: "/icons/image 102.png",
+  },
+  {
+    label: "London",
+    icon: "/icons/image 104.png",
+  },
+  {
+    label: "Ireland",
+    icon: "/icons/image 106.png",
+  },
+  {
+    label: "Amsterdam",
+    icon: "/icons/image 109.png",
+  },
+  {
+    label: "Frankfurt",
+    icon: "/icons/image 108.png",
+  },
+  {
+    label: "Paris",
+    icon: "/icons/image 102.png",
+  },
+  {
+    label: "Tokyo",
+    icon: "/icons/image 113.png",
+  },
+  {
+    label: "Seoul",
+    icon: "/icons/image 114.png",
+  },
+  {
+    label: "Beijing",
+    icon: "/icons/image 115.png",
+  },
+  {
+    label: "Singapore",
+    icon: "/icons/image 116.png",
+  },
+  {
+    label: "Mumbai",
+    icon: "/icons/image 117.png",
+  },
+  {
+    label: "Sao Paulo",
+    icon: "/icons/image 103.png",
+  },
+  {
+    label: "Tanger",
+    icon: "/icons/image 110.png",
+  },
+  {
+    label: "Casablanca",
+    icon: "/icons/image 110.png",
+  },
+  {
+    label: "Cape Town",
+    icon: "/icons/image 112.png",
+  },
+  {
+    label: "Riyadh",
+    icon: "/icons/image 119.png",
+  },
+  {
+    label: "Dubai",
+    icon: "/icons/image 118.png",
+  },
+  {
+    label: "Sydney",
+    icon: "/icons/image 120.png",
+  },
+];
