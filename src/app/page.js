@@ -1,9 +1,126 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const [activeButtons, setActiveButtons] = useState([]);
+  const [data, setData] = useState({});
+
+  const handleSubmit = async () => {
+    if (!data?.monitorStatus) {
+      return toast.error("Please choose a monitor status");
+    }
+    if (!data?.urlToMonitor) {
+      return toast.error("Please enter a URL to monitor");
+    }
+    if (!data?.name) {
+      return toast.error("Please enter a name");
+    }
+    if (!data?.frequency) {
+      return toast.error("Please enter a frequency");
+    }
+    if (!data?.httpMethod) {
+      return toast.error("Please enter a HTTP method");
+    }
+    if (!data?.requestTimeout) {
+      return toast.error("Please enter a request timeout");
+    }
+    if (!data?.requestBody) {
+      return toast.error("Please enter a Request body");
+    }
+    if (!data?.headerName) {
+      return toast.error("Please enter a header name");
+    }
+    if (!data?.headerValue) {
+      return toast.error("Please enter a header value");
+    }
+    if (!data?.username) {
+      return toast.error("Please enter a username");
+    }
+    if (!data?.password) {
+      return toast.error("Please enter a password");
+    }
+    if (!data?.validStatusCodes) {
+      return toast.error("Please enter a valid status codes");
+    }
+    if (!data?.validHttpVersions) {
+      return toast.error("Please enter a valid HTTP versions");
+    }
+    if (!data?.fieldType) {
+      return toast.error("Please enter a field type");
+    }
+    if (!data?.matchConditions) {
+      return toast.error("Please enter a match conditions");
+    }
+    if (!data?.recoveryPeriod) {
+      return toast.error("Please enter a recovery period");
+    }
+    if (!data?.confirmationPeriod) {
+      return toast.error("Please enter a confirmation period");
+    }
+    if (!data?.contactGroup) {
+      return toast.error("Please enter a contact group");
+    }
+    if (!data?.pushIntegration) {
+      return toast.error("Please enter a push integration");
+    }
+    if (!data?.email) {
+      return toast.error("Please enter an email");
+    }
+    if (!activeButtons?.length) {
+      return toast.error("Please choose a HTTP Location");
+    }
+
+    try {
+      const payload = {
+        uptime_config: {
+          type: data?.monitorStatus,
+          timeout: data?.requestTimeout,
+          frequency: data?.frequency,
+          locations: activeButtons,
+          name: data?.name,
+          http: {
+            method: data?.httpMethod,
+            url: data?.urlToMonitor,
+            headers: {
+              Host: data?.headerName,
+              "Accept-Language": data?.headerValue,
+            },
+            basic_auth: {
+              username: data?.username,
+              password: data?.password,
+            },
+            valid_http_versions: data?.validHttpVersions,
+            valid_status_codes: data?.validStatusCodes,
+            follow_redirects: true,
+            fail_if_body_not_matches_regexp: data?.fieldType,
+            fail_if_header_not_matches: data?.matchConditions,
+          },
+        },
+        alert_config: {
+          recovery_period: data?.recoveryPeriod,
+          confirmation_period: data?.confirmationPeriod,
+          contact_group: data?.contactGroup,
+        },
+      };
+      toast.loading("Adding monitor...");
+      const res = await fetch("/api/monitor", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      toast.dismiss();
+      if (res.ok) {
+        toast.success("Monitor added successfully!");
+      } else {
+        toast.error("Something went wrong!");
+      }
+      setData({});
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  };
+
   const countries = [
     {
       label: "> North America (2)",
@@ -175,28 +292,48 @@ export default function Home() {
               <div className="flex gap-5 justify-between items-stretch max-md:flex-wrap max-md:max-w-full">
                 <div className="flex gap-4 justify-between items-stretch">
                   <button
-                    className="grow justify-center items-stretch px-9 py-4 text-xs font-bold text-white rounded border border-solid bg-indigo-600 bg-opacity-40 border-stone-300 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:px-5"
+                    className={`grow justify-center items-stretch px-9 py-4 text-xs font-bold text-white rounded border border-solid bg-opacity-40 border-stone-300 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:px-5 ${
+                      data?.monitorStatus === "HTTPS"
+                        ? "bg-indigo-600"
+                        : "bg-slate-800"
+                    }`}
                     aria-label="HTTP"
+                    onClick={() => setData({ ...data, monitorStatus: "HTTPS" })}
                   >
                     HTTP
                   </button>
                   <button
-                    className="grow justify-center items-stretch px-12 py-4 text-xs font-bold text-white rounded border border-solid bg-slate-800 border-zinc-400 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:px-5"
+                    className={`grow justify-center items-stretch px-9 py-4 text-xs font-bold text-white rounded border border-solid bg-opacity-40 border-stone-300 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:px-5 ${
+                      data?.monitorStatus === "SSL"
+                        ? "bg-indigo-600"
+                        : "bg-slate-800"
+                    }`}
                     aria-label="SSL"
+                    onClick={() => setData({ ...data, monitorStatus: "SSL" })}
                   >
                     SSL
                   </button>
                 </div>
                 <div className="flex gap-4 justify-between items-stretch">
                   <button
-                    className="grow justify-center items-stretch px-10 py-4 text-xs font-bold text-white rounded border border-solid bg-slate-800 border-zinc-400 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:px-5"
+                    className={`grow justify-center items-stretch px-9 py-4 text-xs font-bold text-white rounded border border-solid bg-opacity-40 border-stone-300 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:px-5 ${
+                      data?.monitorStatus === "TCP"
+                        ? "bg-indigo-600"
+                        : "bg-slate-800"
+                    }`}
                     aria-label="TCP"
+                    onClick={() => setData({ ...data, monitorStatus: "TCP" })}
                   >
                     TCP
                   </button>
                   <button
-                    className="grow justify-center items-stretch px-10 py-4 text-xs font-bold text-white rounded border border-solid bg-slate-800 border-zinc-400 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:px-5"
+                    className={`grow justify-center items-stretch px-9 py-4 text-xs font-bold text-white rounded border border-solid bg-opacity-40 border-stone-300 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] max-md:px-5 ${
+                      data?.monitorStatus === "GRPC"
+                        ? "bg-indigo-600"
+                        : "bg-slate-800"
+                    }`}
                     aria-label="GRPC"
+                    onClick={() => setData({ ...data, monitorStatus: "GRPC" })}
                   >
                     GRPC
                   </button>
@@ -220,7 +357,11 @@ export default function Home() {
                   </label>
                   <input
                     type="text"
-                    defaultValue={"https://"}
+                    value={data?.urlToMonitor}
+                    onChange={(e) =>
+                      setData({ ...data, urlToMonitor: e.target.value })
+                    }
+                    placeholder={"https://"}
                     className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                   />
                 </div>
@@ -231,6 +372,10 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
+                      value={data?.name}
+                      onChange={(e) =>
+                        setData({ ...data, name: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
@@ -244,7 +389,11 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
-                      defaultValue={"5 minutes"}
+                      placeholder={"5 minutes"}
+                      value={data?.frequency}
+                      onChange={(e) =>
+                        setData({ ...data, frequency: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
@@ -272,7 +421,11 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
-                      defaultValue={"GET"}
+                      placeholder={"GET"}
+                      value={data?.httpMethod}
+                      onChange={(e) =>
+                        setData({ ...data, httpMethod: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
@@ -282,17 +435,25 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
-                      defaultValue={"30 seconds"}
+                      value={data?.requestTimeout}
+                      onChange={(e) =>
+                        setData({ ...data, requestTimeout: e.target.value })
+                      }
+                      placeholder={"30 seconds"}
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
                 </div>
                 <div>
                   <label className="text-[14px] mb-[10px] block text-white">
-                    URL to monitor{" "}
+                    Request body
                   </label>
                   <textarea
                     type="text"
+                    value={data?.requestBody}
+                    onChange={(e) =>
+                      setData({ ...data, requestBody: e.target.value })
+                    }
                     placeholder="parameter1=value&parameter2=another_value"
                     draggable={false}
                     className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[82px] text-white"
@@ -314,6 +475,10 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
+                      value={data?.headerName}
+                      onChange={(e) =>
+                        setData({ ...data, headerName: e.target.value })
+                      }
                       placeholder="Authorization"
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
@@ -324,6 +489,10 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
+                      value={data?.headerValue}
+                      onChange={(e) =>
+                        setData({ ...data, headerValue: e.target.value })
+                      }
                       placeholder="Bearer ey12345="
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
@@ -348,6 +517,10 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
+                      value={data?.username}
+                      onChange={(e) =>
+                        setData({ ...data, username: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
@@ -357,6 +530,10 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
+                      value={data?.password}
+                      onChange={(e) =>
+                        setData({ ...data, password: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
@@ -437,6 +614,10 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Choose"
+                      value={data?.validStatusCodes}
+                      onChange={(e) =>
+                        setData({ ...data, validStatusCodes: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
@@ -456,6 +637,10 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Choose"
+                      value={data?.validHttpVersions}
+                      onChange={(e) =>
+                        setData({ ...data, validHttpVersions: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
@@ -477,6 +662,10 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="body"
+                      value={data?.fieldType}
+                      onChange={(e) =>
+                        setData({ ...data, fieldType: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
@@ -487,6 +676,10 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Regex"
+                      value={data?.matchConditions}
+                      onChange={(e) =>
+                        setData({ ...data, matchConditions: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                   </div>
@@ -494,9 +687,16 @@ export default function Home() {
                     <label className="text-[14px] mb-[10px] block text-white">
                       Allow Missing
                     </label>
-                    <label class="relative inline-flex items-center me-5 cursor-pointer mt-3">
-                      <input type="checkbox" value="" class="sr-only peer" />
-                      <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-[#fff] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#4248AD]"></div>
+                    <label className="relative inline-flex items-center me-5 cursor-pointer mt-3">
+                      <input
+                        type="checkbox"
+                        checked={data?.allowMissing}
+                        onChange={(e) =>
+                          setData({ ...data, allowMissing: e.target.checked })
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-[#fff] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#4248AD]"></div>
                     </label>
                   </div>
                 </div>
@@ -519,6 +719,10 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="5 minutes"
+                      value={data?.recoveryPeriod}
+                      onChange={(e) =>
+                        setData({ ...data, recoveryPeriod: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
@@ -531,7 +735,11 @@ export default function Home() {
                     </label>
                     <input
                       type="text"
-                      defaultValue={"Immediate start"}
+                      placeholder={"Immediate start"}
+                      value={data?.confirmationPeriod}
+                      onChange={(e) =>
+                        setData({ ...data, confirmationPeriod: e.target.value })
+                      }
                       className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                     />
                     <p className="mt-[5px] text-[10px] text-white max-md:max-w-full">
@@ -549,40 +757,60 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder={"Default / Create a contact group"}
-                    className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
-                  />
-                </div>
-              </div>
-              <div className="py-8 mr-5 ml-20 border-b-[1px] border-[#1F2433]">
-                <div className=" w-full">
-                  <label className="text-[14px] mb-[10px] block text-white">
-                    Contact Group{" "}
-                  </label>
-                  <input
-                    type="text"
-                    placeholder={"Default / Create a contact group"}
+                    value={data?.contactGroup}
+                    onChange={(e) =>
+                      setData({ ...data, contactGroup: e.target.value })
+                    }
                     className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                   />
                 </div>
                 <div className=" w-full my-8">
-                  <label class="relative inline-flex gap-3 items-center me-5 cursor-pointer mt-3">
-                    <input type="checkbox" value="" class="sr-only peer" />
-                    <div class="h-4 w-4 border-[1px] border-white  rounded peer-checked:bg-[#4248AD] "></div>
+                  <label className="relative inline-flex gap-3 items-center me-5 cursor-pointer mt-3">
+                    <input
+                      type="checkbox"
+                      value="email"
+                      onChange={(e) =>
+                        setData({ ...data, pushIntegration: e.target.value })
+                      }
+                      className="sr-only peer"
+                    />
+                    <div className="h-4 w-4 border-[1px] border-white  rounded peer-checked:bg-[#4248AD] "></div>
                     <span className="text-[10px] text-white">E-mail</span>
                   </label>
-                  <label class="relative inline-flex gap-3 items-center me-5 cursor-pointer mt-3">
-                    <input type="checkbox" value="" class="sr-only peer" />
-                    <div class="h-4 w-4 border-[1px] border-white  rounded peer-checked:bg-[#4248AD] "></div>
+                  <label className="relative inline-flex gap-3 items-center me-5 cursor-pointer mt-3">
+                    <input
+                      type="checkbox"
+                      value="sms"
+                      onChange={(e) =>
+                        setData({ ...data, pushIntegration: e.target.value })
+                      }
+                      className="sr-only peer"
+                    />
+                    <div className="h-4 w-4 border-[1px] border-white  rounded peer-checked:bg-[#4248AD] "></div>
                     <span className="text-[10px] text-white">SMS</span>
                   </label>
-                  <label class="relative inline-flex gap-3 items-center me-5 cursor-pointer mt-3">
-                    <input type="checkbox" value="" class="sr-only peer" />
-                    <div class="h-4 w-4 border-[1px] border-white  rounded peer-checked:bg-[#4248AD] "></div>
+                  <label className="relative inline-flex gap-3 items-center me-5 cursor-pointer mt-3">
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      value="call"
+                      onChange={(e) =>
+                        setData({ ...data, pushIntegration: e.target.value })
+                      }
+                    />
+                    <div className="h-4 w-4 border-[1px] border-white  rounded peer-checked:bg-[#4248AD] "></div>
                     <span className="text-[10px] text-white">Call</span>
                   </label>
-                  <label class="relative inline-flex gap-3 items-center me-5 cursor-pointer mt-3">
-                    <input type="checkbox" value="" class="sr-only peer" />
-                    <div class="h-4 w-4 border-[1px] border-white  rounded peer-checked:bg-[#4248AD] "></div>
+                  <label className="relative inline-flex gap-3 items-center me-5 cursor-pointer mt-3">
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      value="pushIntegration"
+                      onChange={(e) =>
+                        setData({ ...data, pushIntegration: e.target.value })
+                      }
+                    />
+                    <div className="h-4 w-4 border-[1px] border-white  rounded peer-checked:bg-[#4248AD] "></div>
                     <span className="text-[10px] text-white">
                       Push Integrations
                     </span>
@@ -595,6 +823,10 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder={"Type a new email"}
+                    value={data?.email}
+                    onChange={(e) =>
+                      setData({ ...data, email: e.target.value })
+                    }
                     className="flex w-full flex-col rounded-xl border-solid bg-slate-800 pl-9  shadow-inner shadow-slate-700  outline-none active:outline-none min-h-[52px] text-white"
                   />
                   <span className="bg-[#4248AD] text-white text-[10px] py-0.5 px-2 rounded-xl">
@@ -606,7 +838,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <button className="w-[170px] h-[44px] border-none text-white text-[20px] bg-[#4248AD] rounded-[10px] float-right mr-28 mb-4">
+      <button
+        onClick={handleSubmit}
+        className="w-[170px] h-[44px] border-none text-white text-[20px] bg-[#4248AD] rounded-[10px] float-right mr-28 mb-4"
+      >
         Create Monitor
       </button>
     </div>
